@@ -1,5 +1,20 @@
-#TODO: Gunicorn, add "Type OK to accept the possible risk to your system. I AM NOT HELD ACCOUNTABLE etc etc"
-#WORKING ON: Static IP
+#SCRUM:
+'''
+ICEBOX:
+    Gunicorn
+    add "Type OK to accept the possible risk to your system. I AM NOT HELD ACCOUNTABLE etc etc"
+
+EMERGENCY:
+
+IN PROGRESS:
+
+TESTING:
+    Static IP
+
+COMPLETE:
+
+
+'''
 import os
 import subprocess
 
@@ -35,8 +50,26 @@ def staticIPSetup():
     if(rawinput3==''):
         gatewayToUse = detectedGateway
     else:
-        gatewayToUse = rawinput2
+        gatewayToUse = rawinput3
 
+    #Open resolv.conf to get DNS records
+    with open('/etc/resolv.conf') as f:
+        #Split each record into different lines
+        lists = f.read().splitlines()
+
+    #Initialize the list of DNS Servers
+    dns_servers = []
+
+    for item in lists:
+        #Split the items by the spaces
+        item = item.split()
+        if item[0] == 'nameserver':
+            #Append each record into the array
+            dns_servers.append(item[1])
+
+    #TODO: Redo this??
+    #Use the first record found.
+    dnsToUse = dns_servers[0]
 
     #Data to insert into /etc/dhcpcd.config
     #Command: echo "data" | sudo tee -a /etc/dhcpcd.conf
@@ -48,7 +81,18 @@ def staticIPSetup():
     '''
     #Obtaining default gateway: ip route | awk '/default/ { print $3 }'
 
+    #Appending to dhcpcd.config
+    subprocess.call('echo "#AutoCTFd set Static IP settings"                             | sudo tee -a /etc/dhcpcd.conf', shell=True)
+    subprocess.call('echo "interface '                    + interface                +'" | sudo tee -a /etc/dhcpcd.conf', shell=True)
+    subprocess.call('echo "static ip_address='            + ipToUse                  +'" | sudo tee -a /etc/dhcpcd.conf', shell=True)
+    subprocess.call('echo "static routers='               + gatewayToUse             +'" | sudo tee -a /etc/dhcpcd.conf', shell=True)
+    subprocess.call('echo "static domain_name_servers='   + dnsToUse                 +'" | sudo tee -a /etc/dhcpcd.conf', shell=True)
 
+    rawinput = raw_input('Do you wish to restart your network interface?\nType "Y" or "Yes" to do so, anything else to not.\n').lower()
+
+    #Restarting network interface
+    if rawinput == 'y' or rawinput == 'yes':
+        subprocess.call('sudo service networking restart', shell=True)
 
 
 '''
