@@ -1,10 +1,11 @@
-# ctfd_auto_install_for_pi3
-An autoinstaller script in Python for CTFd (built with and for the Raspberry Pi 3 Model B)
 
 ![](https://github.com/Tony556/ctfd_auto_install_for_pi3/blob/master/autologo.png)
+An autoinstaller script in Python for CTFd (built with and for the Raspberry Pi 3 Model B)
 ====
 
-CTFd is a CTF in a can. This puts that can into another can with a fork.
+#NOTE: SCRIPT IS NOT FINISHED.
+
+CTFd is a CTF in a can. This script puts that can into yet another can that includes basic utensils.
 
 NOTE: This is built with and for the Raspberry Pi 3 Model B. You may encounter issues on other systems.
 
