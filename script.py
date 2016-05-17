@@ -1,22 +1,20 @@
 #SCRUM:
 '''
 ICEBOX:
-    Gunicorn
-    add "Type OK to accept the possible risk to your system. I AM NOT HELD ACCOUNTABLE etc etc"
 
 EMERGENCY:
 
 IN PROGRESS:
+    Gunicorn
 
 TESTING:
     Static IP
 
 COMPLETE:
-
+    add "Type OK to accept the possible risk to your system. I AM NOT HELD ACCOUNTABLE etc etc"
 
 '''
-import os
-import subprocess
+import sys, subprocess
 
 def staticIPSetup():
     #Getting the current RUNNING network interface. Keyword is RUNNING, since it searches for the BMRU tag on the interface. Unknown how it deals with wlan and ethernet connected.
@@ -94,6 +92,27 @@ def staticIPSetup():
     if rawinput == 'y' or rawinput == 'yes':
         subprocess.call('sudo service networking restart', shell=True)
 
+def gunicornInstall():
+    subprocess.call(["sudo", "pip", "install", "gunicorn"])
+    gunicorn_file = '''import subprocess
+rawinput = raw_input('What port would you like Gunicorn to run on? Default port: 8000')
+if(rawinput==''):
+    portToUse = 8000
+else:
+    portToUse = rawinput
+subprocess.call('gunicorn --bind 0.0.0.0:8000 -w 1 "CTFd:create_app()"', shell=True)
+    '''
+    with open('startGunicornCTFd.py', 'w+') as f:
+        f.write(gunicorn_file)
+
+
+#Warning the user about the possible risks.
+
+try:
+    raw_input('By installing and using this script, you are aware that any issues that may arise from running it, I am not accountable for, and am unable to be held accountable.\nThis script edits core system files in order to do certain functions (said functions will be labeled), and issues may arise if your system has a varying configuration.\nIf you accept the risk, just press ENTER. If not, press Ctrl+C to cancel this script.\n')
+except KeyboardInterrupt:
+    print('\nOk! See you next time!')
+    sys.exit()
 
 '''
 #Getting CTFd, unzipping it, and deleting the zip.
@@ -112,11 +131,17 @@ subprocess.call(["chmod", "+x", "CTFd-master/serve.py"])
 #subprocess.call(["sudo", "./prepare.sh"], cwd="/home/pi/CTFd_Script/CTFd-master/")
 
 #Allowing user to edit config.py
-subprocess.call(["vim", "CTFd-master/CTFd/config.py"])
+raw_input('You are now going to edit config.py. Press CTRL+X, then Y, then ENTER to exit after editing.\n')
+subprocess.call(["nano", "CTFd-master/CTFd/config.py"])
 
 #subprocess.call(["sudo", "python", "serve.py"], cwd="/home/pi/CTFd_Script/CTFd-master")
 
 
-rawinput = raw_input('If you wish to assign this device a Static IP Address, type "Y" or "Yes"\nType anything else to continue without it.\n').lower()
+rawinput = raw_input('If you wish to assign this device a Static IP Address, type "Y" or "Yes"\nType anything else to continue without it.\nWARNING: THIS EDITS SYSTEM FILES (/etc/dhcpcd.conf)\n').lower()
 if(rawinput == 'y' or rawinput == 'yes'):
     staticlist = staticIPSetup()
+
+rawinput = raw_input('If you wish to install Gunicorn onto this device, type "Y" or "Yes"\nType anything else to continue without it.\n').lower()
+if(rawinput == 'y' or rawinput == 'yes'):
+    gunicornInstall()
+    print 'Installed! Now you can launch Gunicorn with "python startGunicornCTFd.py"'
