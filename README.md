@@ -1,18 +1,39 @@
 
 ![](https://github.com/Tony556/ctfd_auto_install_for_pi3/blob/master/autologo.png)
-An autoinstaller script in Python for CTFd (built with and for the Raspberry Pi 3 Model B)
+An autoinstaller script made in Python 2.7 for CTFd (built with and for the Raspberry Pi 3 Model B)
 ====
 
 #NOTE: SCRIPT IS NOT FINISHED.
 
-CTFd is a CTF in a can. This script puts that can into yet another can that includes basic utensils.
+CTFd is a CTF in a can. This script puts that can into yet another can that includes basic eating utensils.
 
-NOTE: This is built with and for the Raspberry Pi 3 Model B. You may encounter issues on other systems.
+NOTES:
+
+ - This is built with and for the Raspberry Pi 3 Model B running default Raspbian. You may encounter issues on other systems.
+ - This is built assuming you have DHCPCD installed and use it to obtain your IP Address.
 
 I am not responsible for any possible risk that happens on your device(s).
 
 Install:
  1. Download the script however you like. A command you can use is `wget https://raw.githubusercontent.com/Tony556/ctfd_auto_install_for_pi3/master/script.py`
+    - Shortened URL `wget https://goo.gl/R62881`
  2. Run the script with `sudo python script.py`
 
 [CTFd Repo](https://github.com/isislab/CTFd)
+
+#SCRUM:
+
+ICEBOX:
+
+EMERGENCY:
+
+IN PROGRESS:
+
+TESTING:
+
+    Gunicorn
+
+COMPLETE:
+
+    add "Type OK to accept the possible risk to your system. I AM NOT HELD ACCOUNTABLE etc etc"
+    Static IP
