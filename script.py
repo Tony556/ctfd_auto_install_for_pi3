@@ -1,19 +1,3 @@
-#SCRUM:
-'''
-ICEBOX:
-
-EMERGENCY:
-
-IN PROGRESS:
-    Gunicorn
-
-TESTING:
-    Static IP
-
-COMPLETE:
-    add "Type OK to accept the possible risk to your system. I AM NOT HELD ACCOUNTABLE etc etc"
-
-'''
 import sys, subprocess
 
 def staticIPSetup():
@@ -102,7 +86,7 @@ else:
     portToUse = rawinput
 subprocess.call('gunicorn --bind 0.0.0.0:8000 -w 1 "CTFd:create_app()"', shell=True)
     '''
-    with open('startGunicornCTFd.py', 'w+') as f:
+    with open('CTFd-master/startGunicornCTFd.py', 'w+') as f:
         f.write(gunicorn_file)
 
 
@@ -114,24 +98,26 @@ except KeyboardInterrupt:
     print('\nOk! See you next time!')
     sys.exit()
 
-'''
+
 #Getting CTFd, unzipping it, and deleting the zip.
 subprocess.call(["wget", "https://github.com/isislab/CTFd/archive/master.zip"])
 
 subprocess.call(["unzip", "master.zip"])
 
 subprocess.call(["rm", "master.zip"])
-'''
+
 
 #Allowing certain files to be executable
-#subprocess.call(["chmod", "+x", "CTFd-master/prepare.sh"])
+subprocess.call(["chmod", "+x", "CTFd-master/prepare.sh"])
 subprocess.call(["chmod", "+x", "CTFd-master/serve.py"])
 
 #Executing CTFd's prepare script. "cwd" is ot make sure it can get the requirements from the .txt in the same directory.
-#subprocess.call(["sudo", "./prepare.sh"], cwd="/home/pi/CTFd_Script/CTFd-master/")
+#Getting the Current Working Directory and trimming trailing newline.
+current = subprocess.check_output(['pwd']).rstrip()
+subprocess.call(["sudo", "./prepare.sh"], cwd=""+current+"/CTFd-master/")
 
 #Allowing user to edit config.py
-raw_input('You are now going to edit config.py. Press CTRL+X, then Y, then ENTER to exit after editing.\n')
+raw_input('You are now going to edit config.py. Press CTRL+X, then Y, then ENTER to exit after editing (Optional).\n')
 subprocess.call(["nano", "CTFd-master/CTFd/config.py"])
 
 #subprocess.call(["sudo", "python", "serve.py"], cwd="/home/pi/CTFd_Script/CTFd-master")
@@ -144,4 +130,4 @@ if(rawinput == 'y' or rawinput == 'yes'):
 rawinput = raw_input('If you wish to install Gunicorn onto this device, type "Y" or "Yes"\nType anything else to continue without it.\n').lower()
 if(rawinput == 'y' or rawinput == 'yes'):
     gunicornInstall()
-    print 'Installed! Now you can launch Gunicorn with "python startGunicornCTFd.py"'
+    print 'Installed! Now you can launch Gunicorn by going into CTFd-master and running "python startGunicornCTFd.py"'
