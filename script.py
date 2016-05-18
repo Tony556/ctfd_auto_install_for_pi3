@@ -84,7 +84,7 @@ if(rawinput==''):
     portToUse = 8000
 else:
     portToUse = rawinput
-subprocess.call('gunicorn --bind 0.0.0.0:8000 -w 1 "CTFd:create_app()"', shell=True)'''
+subprocess.call('gunicorn --bind 0.0.0.0:'+portToUse+' -w 1 "CTFd:create_app()"', shell=True)'''
 
     with open('CTFd-master/startGunicornCTFd.py', 'w+') as f:
         f.write(gunicorn_file)
