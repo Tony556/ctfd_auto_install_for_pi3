@@ -16,7 +16,7 @@ I am not responsible for any possible risk that happens on your device(s).
 
 Install:
  1. Download the script however you like. A command you can use is `wget https://raw.githubusercontent.com/Tony556/ctfd_auto_install_for_pi3/master/script.py`
-    - Shortened URL `wget https://goo.gl/R62881`
+    - Shortened URL `wget -O script.py https://goo.gl/R62881`
  2. Run the script with `sudo python script.py`
     - If you encounter issues with apt-get, here are some recommended repositories for your `/etc/apt/sources.list` file. [Tutorial on how to use](https://askubuntu.com/questions/197564/how-do-i-add-a-line-to-my-etc-apt-sources-list)
 
