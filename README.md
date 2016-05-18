@@ -3,7 +3,7 @@
 An autoinstaller script made in Python 2.7 for CTFd (built with and for the Raspberry Pi 3 Model B)
 ====
 
-#NOTE: SCRIPT IS NOT FINISHED.
+#NOTE: SCRIPT IS IN A WORKING STATE, BUT NOT FINISHED.
 
 CTFd is a CTF in a can. This script puts that can into yet another can that includes basic eating utensils.
 
@@ -18,6 +18,13 @@ Install:
  1. Download the script however you like. A command you can use is `wget https://raw.githubusercontent.com/Tony556/ctfd_auto_install_for_pi3/master/script.py`
     - Shortened URL `wget https://goo.gl/R62881`
  2. Run the script with `sudo python script.py`
+    - If you encounter issues with apt-get, here are some recommended repositories.
+
+     `deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main`
+     `deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main`
+     `deb https://deb.nodesource.com/node_0.10 jessie main`
+     `deb-src https://deb.nodesource.com/node_0.10 jessie main`
+
 
 [CTFd Repo](https://github.com/isislab/CTFd)
 
