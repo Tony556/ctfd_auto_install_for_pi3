@@ -13,7 +13,7 @@ def staticIPSetup():
     #Used a nice command from cyberciti.biz to get the IP from the interface.
     # http://www.cyberciti.biz/faq/how-to-find-out-the-ip-address-assigned-to-eth0-and-display-ip-only/
 
-    detectedIP = subprocess.check_output("ifconfig "+interface+" | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'", shell=True)\
+    detectedIP = subprocess.check_output("ifconfig "+interface+" | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'", shell=True)
 
     rawinput2 = raw_input("Please enter an IP Address for the static IP? Detected IP for set interface is: "+detectedIP+"\nEnter nothing to use it, otherwise, enter the IP you would like to use\n")
 
@@ -84,8 +84,13 @@ if(rawinput==''):
     portToUse = str(8000)
 else:
     portToUse = str(rawinput)
+interface = subprocess.check_output('netstat -i | grep BMRU', shell=True).split()[0]
+detectedIP = subprocess.check_output("ifconfig "+interface+" | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'", shell=True)
+print 'Alright! Now, in your web browser, connect to http://'+detectedIP.rstrip()+':'+portToUse
+print ''
+print ''
 subprocess.call('sudo gunicorn --bind 0.0.0.0:'+portToUse+' -w 1 "CTFd:create_app()"', shell=True)'''
-
+    
     with open('CTFd-master/startGunicornCTFd.py', 'w+') as f:
         f.write(gunicorn_file)
 
