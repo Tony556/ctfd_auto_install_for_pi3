@@ -21,8 +21,11 @@ Install:
     - If you encounter issues with apt-get, here are some recommended repositories.
 
      `deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main`
+
      `deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main`
+
      `deb https://deb.nodesource.com/node_0.10 jessie main`
+     
      `deb-src https://deb.nodesource.com/node_0.10 jessie main`
 
 
