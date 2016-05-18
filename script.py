@@ -79,7 +79,7 @@ def staticIPSetup():
 def gunicornInstall():
     subprocess.call(["sudo", "pip", "install", "gunicorn"])
     gunicorn_file = '''import subprocess
-rawinput = raw_input('What port would you like Gunicorn to run on? Default port: 8000')
+rawinput = raw_input('What port would you like Gunicorn to run on? Default port: 8000\n')
 if(rawinput==''):
     portToUse = 8000
 else:
