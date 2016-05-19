@@ -35,6 +35,7 @@ Install:
 
 ICEBOX:
     Automatic apt-get repository installer
+
 EMERGENCY:
 
 IN PROGRESS:
@@ -46,4 +47,4 @@ TESTING:
 COMPLETE:
 
     add "Type OK to accept the possible risk to your system. I AM NOT HELD ACCOUNTABLE etc etc"
-    Static IP
+    ~~Static IP~~ Removed from main script until further notice. Still enabled in script.py.old
