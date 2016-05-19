@@ -9,17 +9,29 @@ def gunicornInstall():
     subprocess.call(["sudo", "pip", "install", "gunicorn"])
     #Raw python file to be written to disk as a script
     gunicorn_file = '''import subprocess
-rawinput = raw_input('What port would you like Gunicorn to run on? Default port: 8000 \\n')
-if(rawinput==''):
-    portToUse = str(8000)
-else:
-    portToUse = str(rawinput)
-interface = subprocess.check_output('netstat -i | grep BMRU', shell=True).split()[0]
-detectedIP = subprocess.check_output("ifconfig "+interface+" | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'", shell=True)
-print 'Alright! Now, in your web browser, connect to http://'+detectedIP.rstrip()+':'+portToUse
-print ''
-print ''
-subprocess.call('sudo gunicorn --bind 0.0.0.0:'+portToUse+' -w 1 "CTFd:create_app()"', shell=True)'''
+    import socket
+
+    interface = subprocess.check_output('netstat -i | grep BMRU', shell=True).split()[0]
+    detectedIP = subprocess.check_output("ifconfig "+interface+" | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'", shell=True)
+
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    result = sock.connect_ex(('localhost',80))
+    if result == 0:
+       rawinput = raw_input('Port 80 is already being used!\\nWhat port would you like Gunicorn to run on? Default port: 8000 \\n')
+       if(rawinput==''):
+           portToUse = str(8000)
+       else:
+           portToUse = str(rawinput)
+       print 'Alright! Now, in your web browser, connect to http://'+detectedIP.rstrip()+':'+portToUse
+       print ''
+       print ''
+       subprocess.call('sudo gunicorn --bind 0.0.0.0:'+portToUse+' -w 1 "CTFd:create_app()"', shell=True)
+    else:
+        portToUse = str(80)
+        print 'Alright! Now, in your web browser, connect to http://'+detectedIP.rstrip()+':'+portToUse
+        print ''
+        print ''
+        subprocess.call('sudo gunicorn --bind 0.0.0.0:'+portToUse+' -w 1 "CTFd:create_app()"', shell=True)'''
 
     with open('CTFd-master/startGunicornCTFd.py', 'w+') as f:
         f.write(gunicorn_file)
